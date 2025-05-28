@@ -24,8 +24,8 @@ class AddForm extends CI_Controller
 
 		if ($this->form_validation->run() == FALSE)
 		{
-			echo 'Input data is invalid';
-			$this->load->view('AddForm'); //バリデーション失敗時には再度フォームを表示する
+			$failure_message = 'Input is invalid.';
+			$this->load->view('AddForm', $failure_message); //バリデーション失敗時には再度フォームを表示する
 		}
 		else 
 		{
@@ -41,7 +41,7 @@ class AddForm extends CI_Controller
 			}
 			else
 			{
-				echo 'save failed';
+         echo 'Something went wrong. Please try again later.';
 			}
 		}
 	}

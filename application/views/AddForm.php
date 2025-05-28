@@ -2,10 +2,20 @@
 echo form_open('AddForm/SaveForm');
 ?>
 
+<div>
+  Server messages
+  <?php
+  if (isset($failure_message))
+  {
+      echo $failure_message;
+  }
+  ?>
+</div>
+
 <p>
   <?php echo form_label('URL', 'url_field'); ?><br>
   <?php $url_data = array(
-    'name' => 'urlfield',
+    'name' => 'url_field',
     'id' => 'url_field',
     'placeholder' => 'http://example.com',
     'value' => set_value('url_field')
