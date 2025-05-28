@@ -14,11 +14,11 @@ class BookmarkList extends CI_Controller
       if ($data === false)
       {
         echo 'Failed to retrieve bookmarks.';
-        return;
       }
       else
       {
-        $this->load->view('BookmarkList', $data);
+        // echo $data[0]->url;
+        $this->load->view('BookmarkList', array('data'=>$data));
       }
       
     }

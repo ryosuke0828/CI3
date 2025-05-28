@@ -10,10 +10,10 @@ class BookmarkListModel extends CI_Model{
   public function getAllBookmarks()
   {
     $query = $this->db->query(
-      'SELECT * FROM bookmarks ORDER BY id DESC'
+      'SELECT * FROM bookmarks ORDER BY id ASC'
     );
 
-    if (!$query)
+    if ($query==FALSE)
     {
       return false;
     }
