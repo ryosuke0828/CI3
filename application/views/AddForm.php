@@ -1,14 +1,14 @@
 <?php
-echo form_open('AddForm/Save');
+echo form_open('AddForm/SaveForm');
 ?>
 
 <p>
   <?php echo form_label('URL', 'url_field'); ?><br>
   <?php $url_data = array(
-    'name' => 'url',
+    'name' => 'urlfield',
     'id' => 'url_field',
     'placeholder' => 'http://example.com',
-    'value' => set_value('url')
+    'value' => set_value('url_field')
   );
   echo form_input($url_data);
   ?>
@@ -16,10 +16,10 @@ echo form_open('AddForm/Save');
 <p>
   <?php echo form_label('Title', 'title_field'); ?><br>
   <?php $title_data = array(
-    'name' => 'title',
+    'name' => 'title_field',
     'id' => 'title_field',
     'placeholder' => 'ブックマークのタイトル',
-    'value' => set_value('title')
+    'value' => set_value('title_field')
   );
   echo form_input($title_data);
   ?>
