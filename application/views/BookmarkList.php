@@ -4,12 +4,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 <h1>ブックマークリスト</h1>
 
+<form action="<?php echo base_url('index.php/BookmarkList/searchBookmarks'); ?>" method="post">
+    <input type="text" name="search_title" placeholder="title" value="<?php echo isset($search_term) ? html_escape($search_term) : ''; ?>">
+    <input type="submit" value="検索">
+</form>
+<br>
+
 <?php if (!empty($data) && is_array($data)): ?>
     <table>
         <thead>
             <tr>
                 <th>タイトル</th>
                 <th>URL</th>
+                <th>削除</th>
             </tr>
         </thead>
         <tbody>
@@ -22,8 +29,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             </a>
                         </td>
                         <td><?php echo html_escape($item->url); ?></td>
+                        <td>
+                            <a href="<?php echo base_url('index.php/BookmarkList/DeleteBookmark/' . $item->id); ?>" 
+                               onclick="return confirm('このブックマークを削除しますか？');"
+                               style="text-decoration: none;">
+                                <button type="button" style="background-color: #dc3545; color: white; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer;">DELETE</button>
+                            </a>
+                        </td>
                     <?php else: ?>
-                        <td colspan="2">ブックマーク情報が不完全です。</td>
+                        <td colspan="3">ブックマーク情報が不完全です。</td>
                     <?php endif; ?>
                 </tr>
             <?php endforeach; ?>

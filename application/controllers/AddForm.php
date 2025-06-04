@@ -10,7 +10,7 @@ class AddForm extends CI_Controller
 		$this->load->helper('form');
 		$this->load->helper('url');
 		$this->load->library('form_validation');
-		$this->load->model('BookmarkModel');
+		$this->load->model('BookmarkListModel');
 	}
 	public function ShowForm()
 	{
@@ -34,7 +34,7 @@ class AddForm extends CI_Controller
 				'title' => $this->input->post('title_field')
 			);
 
-			$result = $this->BookmarkModel->saveData($data);
+			$result = $this->BookmarkListModel->saveData($data);
 			if ($result == TRUE)
 			{
 				redirect('BookmarkList');
