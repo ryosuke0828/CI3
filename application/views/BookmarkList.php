@@ -16,6 +16,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <tr>
                 <th>タイトル</th>
                 <th>URL</th>
+                <th>お気に入り</th>
                 <th>削除</th>
             </tr>
         </thead>
@@ -30,6 +31,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         </td>
                         <td><?php echo html_escape($item->url); ?></td>
                         <td>
+                            <input type="checkbox" class="favorite-checkbox" data-id="<?php echo $item->id; ?>" <?php echo (isset($item->is_favorite) && $item->is_favorite == 1) ? 'checked' : ''; ?>>
+                        </td>
+                        <td>
                             <a href="<?php echo base_url('index.php/BookmarkList/DeleteBookmark/' . $item->id); ?>" 
                                onclick="return confirm('このブックマークを削除しますか？');"
                                style="text-decoration: none;">
@@ -37,7 +41,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             </a>
                         </td>
                     <?php else: ?>
-                        <td colspan="3">ブックマーク情報が不完全です。</td>
+                        <td colspan="4">ブックマーク情報が不完全です。</td>
                     <?php endif; ?>
                 </tr>
             <?php endforeach; ?>
@@ -53,6 +57,40 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <a href="<?php echo base_url('index.php/AddForm'); ?>" style="text-decoration: none;">
     <button type="button">追加フォーム</button>
 </a>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const checkboxes = document.querySelectorAll('.favorite-checkbox');
+    checkboxes.forEach(function(checkbox) {
+        checkbox.addEventListener('change', function() {
+            const bookmarkId = this.dataset.id;
+            const isChecked = this.checked;
+
+            fetch('<?php echo base_url("index.php/BookmarkList/favorite/"); ?>' + bookmarkId, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                body: JSON.stringify({ is_favorite: isChecked ? 1 : 0 })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    console.log('Favorite status updated successfully.');
+                } else {
+                    console.error('Failed to update favorite status.');
+                    this.checked = !isChecked;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                this.checked = !isChecked;
+            });
+        });
+    });
+});
+</script>
 
 </body>
 </html>

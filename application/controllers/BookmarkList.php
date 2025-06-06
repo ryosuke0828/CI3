@@ -47,10 +47,22 @@ class BookmarkList extends CI_Controller
       }
       else
       {
-        // echo 'Bookmarks found: ' . count($data);
-        // echo 'title';
         $this->load->view('BookmarkList', array('data'=>$data));
       }
     }
-}
+
+    public function favorite($id)
+    {
+      $result = $this->BookmarkListModel->favoriteData($id);
+        if ($result === false)
+        {
+          echo 'Cannot retrieve';
+        }
+        else
+        {
+          redirect('BookmarkList/ShowList');
+        }
+
+      }
+    }
 ?>

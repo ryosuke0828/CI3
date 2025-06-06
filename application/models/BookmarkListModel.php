@@ -70,5 +70,26 @@ class BookmarkListModel extends CI_Model{
         return false;
       }
     }
+
+    public function favoriteData($id)
+    {
+      $this->db->select('is_favorite');
+      $this->db->where('id', $id);
+      $query = $this->db->get('bookmarks');
+
+      if ($query->num_rows() > 0) {
+        $current_status = $query->row()->is_favorite;
+        $new_status = ($current_status == 1) ? 0 : 1;
+
+        $this->db->where('id', $id);
+        $update_query = $this->db->update('bookmarks', array('is_favorite' => $new_status));
+
+        if ($update_query)
+        {
+          return true;
+        }
+      }
+      return false;
+    }
 }
 ?>
